@@ -4,10 +4,25 @@ An API wrapper for the semi-public [radio.net](https://radio.net) API
 ## Installation
 Download the jar file from the [release page](https://github.com/ColyTeam/RadioNetAPI/releases/latest).
 
+### Maven
+
+```xml
+<repository>
+    <id>coly</id>
+    <url>https://m2.coly.dev/releases</url>
+</repository>
+
+<dependency>
+    <groupId>dev.coly</groupId>
+    <artifactId>radio-net-api</artifactId>
+    <version>VERSION</version>
+</dependency>
+````
+
 ## Usage
 This project can only be used as a libary.
 
-Examples:
+### Examples
 
 ```JAVA
 Station station = RadioNetAPI.searchStation("schlagerparadies", Locale.GERMAN);
@@ -24,6 +39,6 @@ NowPlaying nowPlaying = RadioNetAPI.getNowPlaying("schlagerparadies", Locale.GER
 System.out.println("The station is now playing: " + nowPlaying.getTitle());
 ```
 
-Tips:
+### Tips
 - The stationId is case sensitive
 - NowPlaying#getTitle can get some wierd shorted text in some examples. It will not be an title and artist for all stations.
