@@ -1,12 +1,15 @@
 package dev.coly.radionetapi;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import dev.coly.radionetapi.items.NowPlaying;
 import dev.coly.radionetapi.items.SearchResponse;
 import dev.coly.radionetapi.items.Station;
 import org.jsoup.Jsoup;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
@@ -29,9 +32,12 @@ public class RadioNetAPI {
                 .userAgent("RadioNetAPI/1.0").header("Accept-Language", language.getISO3Language())
                 .ignoreContentType(true).execute().body();
 
-        content = content.replaceFirst(Pattern.quote("["), "").substring(0, content.length() - 2);
-
-        return gson.fromJson(content, Station.class);
+        Type listType = new TypeToken<List<Station>>(){}.getType();
+        List<Station> stations = gson.fromJson(content, listType);
+        if (stations.size() == 0) {
+            throw new IllegalArgumentException("No stations found with this id");
+        }
+        return stations.get(0);
     }
 
     /**
